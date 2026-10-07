@@ -245,6 +245,86 @@
                   action="${pageContext.request.contextPath}/register"
                   class="mt-8 space-y-5">
 
+                <!-- First name / Last name -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                    <div>
+                        <label for="firstName"
+                               class="block text-sm font-semibold text-slate-700 mb-2">
+                            First name
+                        </label>
+
+                        <div class="relative">
+                            <i data-lucide="user"
+                               class="absolute left-4 top-1/2 -translate-y-1/2
+                                      w-5 h-5 text-slate-400"></i>
+
+                            <input id="firstName"
+                                   type="text"
+                                   name="firstName"
+                                   required
+                                   autocomplete="given-name"
+                                   placeholder="John"
+                                   class="w-full border border-slate-200 rounded-xl
+                                          pl-12 pr-4 py-3.5 bg-white text-slate-900
+                                          placeholder:text-slate-400 outline-none transition
+                                          focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="lastName"
+                               class="block text-sm font-semibold text-slate-700 mb-2">
+                            Last name
+                        </label>
+
+                        <div class="relative">
+                            <i data-lucide="user"
+                               class="absolute left-4 top-1/2 -translate-y-1/2
+                                      w-5 h-5 text-slate-400"></i>
+
+                            <input id="lastName"
+                                   type="text"
+                                   name="lastName"
+                                   required
+                                   autocomplete="family-name"
+                                   placeholder="Doe"
+                                   class="w-full border border-slate-200 rounded-xl
+                                          pl-12 pr-4 py-3.5 bg-white text-slate-900
+                                          placeholder:text-slate-400 outline-none transition
+                                          focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- CIN -->
+                <div>
+                    <label for="cin"
+                           class="block text-sm font-semibold text-slate-700 mb-2">
+                        CIN
+                    </label>
+
+                    <div class="relative">
+                        <i data-lucide="id-card"
+                           class="absolute left-4 top-1/2 -translate-y-1/2
+                                  w-5 h-5 text-slate-400"></i>
+
+                        <input id="cin"
+                               type="text"
+                               name="cin"
+                               required
+                               maxlength="20"
+                               autocomplete="off"
+                               placeholder="AB123456"
+                               class="w-full border border-slate-200 rounded-xl
+                                      pl-12 pr-4 py-3.5 bg-white text-slate-900
+                                      placeholder:text-slate-400 outline-none transition uppercase
+                                      focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10">
+                    </div>
+                </div>
+
 
                 <!-- Email -->
                 <div>

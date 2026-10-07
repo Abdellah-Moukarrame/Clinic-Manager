@@ -1,5 +1,6 @@
 package com.example.clinic_manager.model;
 
+import com.example.clinic_manager.model.enums.Role;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +20,9 @@ public abstract class User {
 
     @Column(nullable = false)
     private boolean active = true;
+
+    @Transient
+    public abstract Role getRole();
 
     public User() {
     }

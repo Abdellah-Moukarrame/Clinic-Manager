@@ -1,5 +1,6 @@
 package com.example.clinic_manager.model;
 
+import com.example.clinic_manager.model.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -10,6 +11,11 @@ public class Staff extends User {
     private String firstName;
     private String lastName;
     private String phone;
+
+    @Override
+    public Role getRole() {
+        return Role.STAFF;
+    }
 
     public Staff() {
     }

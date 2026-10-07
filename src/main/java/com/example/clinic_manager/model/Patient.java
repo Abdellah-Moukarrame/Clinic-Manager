@@ -1,6 +1,7 @@
 package com.example.clinic_manager.model;
 
 import com.example.clinic_manager.model.enums.Gender;
+import com.example.clinic_manager.model.enums.Role;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -28,6 +29,11 @@ public class Patient extends User {
 
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments = new ArrayList<>();
+
+    @Override
+    public Role getRole() {
+        return Role.PATIENT;
+    }
 
     public Patient() {
     }

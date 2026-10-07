@@ -37,12 +37,21 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        String cin = req.getParameter("cin");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("firstName");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-
+        if (cin == null || cin.isBlank() || firstName == null || firstName.isBlank() || lastName == null || lastName.isBlank()){
+            req.setAttribute("error","all the fields are reqeired to fill");
+            req.getRequestDispatcher("/auth/register.jsp");
+        }
         Patient patient = new Patient();
         patient.setEmail(email);
         patient.setPassword(password);
+        patient.setCin(cin);
+        patient.setFirstName(firstName);
+        patient.setLastName(lastName);
 
         try {
             authService.register(patient);

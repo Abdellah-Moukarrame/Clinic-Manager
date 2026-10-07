@@ -1,5 +1,6 @@
 package com.example.clinic_manager.model;
 
+import com.example.clinic_manager.model.enums.Role;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ public class Doctor extends User {
 
     @OneToMany(mappedBy = "doctor")
     private List<Appointment> appointments = new ArrayList<>();
+
+    @Override
+    public Role getRole() {
+        return Role.DOCTOR;
+    }
 
     public Doctor() {
     }

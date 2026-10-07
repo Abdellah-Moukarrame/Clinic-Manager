@@ -31,18 +31,24 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Optional<User> login(String email , String password) {
+    public Optional<User> login(String email, String password) {
+
         Optional<User> userOptional = userRepository.findByEmail(email);
-        if (!userOptional.isPresent()) {
+
+        if (userOptional.isEmpty()) {
             return Optional.empty();
         }
 
-        User user=userOptional.get();
-        if (BCrypt.checkpw(password,user.getPassword()) ) {
-            return Optional.of(user);
+        User user = userOptional.get();
 
+        if (!BCrypt.checkpw(password, user.getPassword())) {
+            return Optional.empty();
         }
-        return Optional.empty();
 
+        if (!user.isActive()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(user);
     }
 }
