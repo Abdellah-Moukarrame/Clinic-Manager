@@ -30,35 +30,53 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(
+            HttpServletRequest req,
+            HttpServletResponse resp
+    ) throws ServletException, IOException {
+
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        if (password == null || email == null || password.isBlank() || email.isBlank()){
-            req.setAttribute("error","please all the fields are requered");
-            req.getRequestDispatcher("/auth/login.jsp").forward(req,resp);
 
-        }
+        Optional<User> userOptional = authService.login(email, password);
 
-        Optional<User> optionalUser = authService.login(email.trim(), password);
-
-        if (optionalUser.isEmpty()) {
-            req.setAttribute("error", "Invalid email or password.");
-            req.getRequestDispatcher("/auth/login.jsp").forward(req, resp);
+        if (userOptional.isEmpty()) {
+            req.setAttribute("error", "Email ou mot de passe incorrect");
+            req.getRequestDispatcher("/auth/login.jsp")
+                    .forward(req, resp);
             return;
         }
 
-        User user = optionalUser.get();
-        HttpSession old = req.getSession(false);
-        if (old != null) old.invalidate();
+        User user = userOptional.get();
 
         HttpSession session = req.getSession(true);
-        session.setAttribute("userId", user.getId());
-        session.setAttribute("role", user.getRole().name());
 
-        resp.sendRedirect(req.getContextPath() + "/dashboard");
-
-        
+        session.setAttribute("user", user);
 
 
+        switch (user.getRole()) {
+
+            case ADMIN:
+                resp.sendRedirect(
+                        req.getContextPath() + "/admin/dashboard"
+                );
+                break;
+
+            case DOCTOR:
+                resp.sendRedirect(
+                        req.getContextPath() + "/doctor/dashboard"
+                );
+                break;
+
+            case PATIENT:
+                resp.sendRedirect(
+                        req.getContextPath() + "/patient/dashboard"
+                );
+                break;
+
+            default:
+                session.invalidate();
+                resp.sendRedirect(req.getContextPath() + "/login");
+        }
     }
 }
