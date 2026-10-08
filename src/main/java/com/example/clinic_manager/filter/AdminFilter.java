@@ -11,23 +11,41 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-
 @WebFilter("/admin/*")
 public class AdminFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
+    public void doFilter(
+            ServletRequest request,
+            ServletResponse response,
+            FilterChain chain
+    ) throws IOException, ServletException {
+
+        HttpServletRequest req =
+                (HttpServletRequest) request;
+
+        HttpServletResponse resp =
+                (HttpServletResponse) response;
+
         HttpSession session = req.getSession(false);
 
-        if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect(req.getContextPath()+"/login.jsp");
+        if (session == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
         }
+
         User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
         if (user.getRole() != Role.ADMIN) {
             resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
         }
-        chain.doFilter(request,response);
+
+        chain.doFilter(request, response);
     }
 }
