@@ -5,10 +5,13 @@ import com.example.clinic_manager.model.Patient;
 import java.util.Optional;
 
 public interface PatientService {
-   public Optional<Patient> findById( long id) ;
-   public Optional<Patient> findByEmail (String email);
-   public void updateProfile();
-   public void updatePassword();
+    Optional<Patient> findById(Long id);
+
+    Optional<Patient> findByEmail(String email);
+
+    void updateProfile(Patient patient);
+
+    void updatePassword(Long patientId, String oldPassword, String newPassword);
 
     void setActive(Long patientId, boolean active);
 }
